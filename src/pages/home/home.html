@@ -9,8 +9,8 @@
 <ion-content>
 	<ion-list>
 		<ion-item *ngFor="let item of projects" (click)="openProjectPage(item)">
-			{{item.Name}}
-			<progressbar progress=50></progressbar>
+			<h2 ion-text>{{item.Name}}</h2><h4 ion-text>{{item.InfoText}}</h4>
+			<progressbar progress={{item.Progress}}></progressbar>
 		</ion-item>
 	</ion-list>
 </ion-content>
