@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Check List
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+	<ion-fab right bottom>
+		<button ion-fab (click)="addCheck()"><ion-icon name="add"></ion-icon></button>
+	</ion-fab>
+	<progressbar progress="{{totalProgress}}"></progressbar>
+	<ion-list>
+		<ion-card *ngFor="let category of categories">
+			<ion-card-header>
+				{{category.Name}}
+				<progressbar progress={{category.Progress}}></progressbar>
+			</ion-card-header>
+			<ion-card-content>
+				<ion-list>
+					<ion-item *ngFor="let item of category.Data">
+						<ion-label>{{item.Title}}</ion-label>
+						<ion-checkbox>{{item.Checked}}</ion-checkbox>
+					</ion-item>
+				</ion-list>
+			</ion-card-content>
+		</ion-card>
+	</ion-list>
+</ion-content>

@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      New check
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+	<ion-list>
+		<ion-item>
+			<ion-label>Title</ion-label>
+			<ion-input type="text"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label>Category</ion-label>
+			<ion-select #CategorySelect (ionChange)="onCategoryChange($event)">
+				<ion-option *ngFor="let cat of categories" value="{{cat}}">{{cat}}</ion-option>
+				<ion-option>Add category</ion-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-label>Description</ion-label>
+			<ion-input type="text"></ion-input>
+		</ion-item>
+	</ion-list>
+	<button ion-button full (Click)="addCheck()">Add</button>
+</ion-content>

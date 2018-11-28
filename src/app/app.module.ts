@@ -6,12 +6,22 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { NewProjectPage } from '../pages/home/newproject';
+import { PeriodPage } from '../pages/period/period';
+import { NewPeriodPage } from '../pages/period/newperiod';
+import { CheckPage } from '../pages/check/check';
+import { NewCheckPage } from '../pages/check/newcheck';
 import { ProgressBarComponent } from '../components/progressbar/progressbar'
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
+	NewProjectPage,
+	PeriodPage,
+	NewPeriodPage,
+	CheckPage,
+	NewCheckPage,
 	ProgressBarComponent
   ],
   imports: [
@@ -21,7 +31,12 @@ import { ProgressBarComponent } from '../components/progressbar/progressbar'
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+	NewProjectPage,
+	PeriodPage,
+	NewPeriodPage,
+	CheckPage,
+	NewCheckPage,
   ],
   providers: [
     StatusBar,

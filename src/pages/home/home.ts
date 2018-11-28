@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { NewProjectPage } from '../home/newproject';
+import { PeriodPage } from '../period/period';
+import { CheckPage } from '../check/check';
 
 @Component({
   selector: 'page-home',
@@ -16,23 +19,37 @@ export class HomePage {
 		"InfoText":"",
 		"StartDate":"2018-01-20",
 		"EndDate":"2019-02-23",
+		"Data":[
+		{
+			"Title":"A",
+			"StartDate":"2018-10-01",
+			"EndDate":"2020-03-02",
+		},
+		]
 	  },
 	  {
 		"Name":"TestCheckList", 
 		"Type":"Check", 
 		"Progress":80,
 		"InfoText":"",
+		"Category":[
+			"CategoryA",
+			"CategoryB",
+		],
 		"Data":[
 		{
-			"Text":"Check list 1",
+			"Title":"Check list 1",
+			"Category":"CategoryA",
 			"Checked":false
 		},
 		{
-			"Text":"Check list 2",
+			"Title":"Check list 2",
+			"Category":"CategoryA",
 			"Checked":true
 		},
 		{
-			"Text":"Check list 3",
+			"Title":"Check list 3",
+			"Category":"CategoryB",
 			"Checked":false
 		},
 		]
@@ -68,8 +85,8 @@ export class HomePage {
 	for(var projidx=0;projidx<this.projects.length;projidx++) {
 		var project = this.projects[projidx];
 		if (project["Type"] == "Period") {
-			var startDate = new Date(project["StartDate"]);
-			var endDate = new Date(project["EndDate"]);
+			var startDate = Date.parse(project["StartDate"]);
+			var endDate = Date.parse(project["EndDate"]);
 			var todayDate = Date.now();
 			var duration = Math.ceil((endDate - todayDate) / (1000 * 60 * 60 * 24));
 			project["Progress"] = Math.ceil((todayDate - startDate) * 100 / (endDate - startDate));
@@ -102,6 +119,12 @@ export class HomePage {
 	}
   }
   openProjectPage(item) {
-	  console.log(item);
+	if (item["Type"] == "Period")
+		this.navCtrl.push(PeriodPage, {project: item});
+	else if (item["Type"] == "Check")
+		this.navCtrl.push(CheckPage, {project: item});
+  }
+  addProject() {
+	  this.navCtrl.push(NewProjectPage);
   }
 }

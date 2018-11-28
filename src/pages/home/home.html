@@ -7,6 +7,9 @@
 </ion-header>
 
 <ion-content>
+	<ion-fab right bottom>
+		<button ion-fab (click)="addProject()"><ion-icon name="add"></ion-icon></button>
+	</ion-fab>
 	<ion-list>
 		<ion-item *ngFor="let item of projects" (click)="openProjectPage(item)">
 			<h2 ion-text>{{item.Name}}</h2><h4 ion-text>{{item.InfoText}}</h4>

@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Period
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+	<ion-fab right bottom>
+		<button ion-fab (click)="addPeriod()"><ion-icon name="add"></ion-icon></button>
+	</ion-fab>
+	<ion-list>
+		<ion-item *ngFor="let item of items">
+			<h2 ion-text>{{item.Title}}</h2>
+			<h4 *ngFor="let text of item.InfoTexts" ion-text>{{text}}</h4>
+			<h4 ion-text>{{item.StartDateObj | date:'yyyy/MM'}} - {{item.EndDateObj | date:'yyyy/MM'}}</h4>
+			<progressbar progress={{item.Progress}}></progressbar>
+		</ion-item>
+	</ion-list>
+</ion-content>

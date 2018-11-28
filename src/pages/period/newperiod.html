@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      New period
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+	<ion-list>
+		<ion-item>
+			<ion-label>Title</ion-label>
+			<ion-input type="text" value="New Period" #Title></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label>Begin</ion-label>
+			<ion-input type="date" #Begin></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label>End</ion-label>
+			<ion-input type="date" #End></ion-input>
+		</ion-item>
+	</ion-list>
+	<button ion-button (click)="addPeriod()" full>Add</button>
+</ion-content>
