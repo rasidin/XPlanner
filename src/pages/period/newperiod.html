@@ -8,8 +8,15 @@
 <ion-content>
 	<ion-list>
 		<ion-item>
-			<ion-label>Title</ion-label>
-			<ion-input type="text" value="New Period" #Title></ion-input>
+			<ion-label>Name</ion-label>
+			<ion-input type="text" value="New Period" #Name></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label>Category</ion-label>
+			<ion-select #CategorySelect (ionChange)="onCategoryChange($event)">
+				<ion-option *ngFor="let cat of categories" value="{{cat}}">{{cat}}</ion-option>
+				<ion-option>Add category</ion-option>
+			</ion-select>
 		</ion-item>
 		<ion-item>
 			<ion-label>Begin</ion-label>

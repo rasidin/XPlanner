@@ -8,15 +8,20 @@ import { NewPeriodPage } from '../period/newperiod';
 })
 export class PeriodPage {
 	project: any;
+	database: any;
 	items: any;
 	
 	constructor(public navCtrl: NavController, public navParams: NavParams) {
 		this.project = this.navParams.data.project;
+		this.database = this.navParams.data.database;
 		this.items = this.project.Data;
 		
 		this.setupDate();
 	}
-	
+	ionViewWillEnter() {
+		this.database.getProjectItems(this.project);
+		this.setupDate();
+	}	
 	setupDate() {
 		if (this.items == null) return;
 		console.log(this.items);
@@ -25,14 +30,9 @@ export class PeriodPage {
 			var item = this.items[itemidx];
 			item.StartDateObj = new Date(Date.parse(item["StartDate"]));
 			item.EndDateObj = new Date(Date.parse(item["EndDate"]));
-
-			console.log(item.StartDateObj);
-			console.log(item.EndDateObj);
-			console.log(todayDate);
 			
 			var duration = Math.ceil((item.EndDateObj - item.StartDateObj)  / (1000 * 60 * 60 * 24));
 			var leftDays = Math.ceil((item.EndDateObj - todayDate)  / (1000 * 60 * 60 * 24));
-			console.log(leftDays);
 			
 			// Info line 0
 			item.InfoTexts = [];
@@ -47,6 +47,11 @@ export class PeriodPage {
 		}
 	}
 	addPeriod() {
-		this.navCtrl.push(NewPeriodPage, {project:this.project});
+		var categoryList = [];
+		for (var itemidx=0;itemidx<this.items.length;itemidx++) {
+			if (!(this.items[itemidx].Category in categoryList))
+				categoryList.push(this.items[itemidx].Category);
+		}
+		this.navCtrl.push(NewPeriodPage, {project:this.project, categories:categoryList, database:this.database});
 	}
 }

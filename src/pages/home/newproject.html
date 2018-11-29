@@ -8,17 +8,21 @@
 <ion-content>
 	<ion-list>
 		<ion-item>
-			<ion-label>Title</ion-label>
-			<ion-input type="text" value="New Project"></ion-input>
+			<ion-label>Name</ion-label>
+			<ion-input #Name type="text" value="New Project"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label>Type</ion-label>
-			<ion-select>
+			<ion-select #Type>
 				<ion-option value="Period" selected="true">Period</ion-option>
 				<ion-option value="Check">Check</ion-option>
 				<ion-option value="Ticket">Ticket</ion-option>
 			</ion-select>
 		</ion-item>
+		<ion-item>
+			<ion-label>Description</ion-label>
+			<ion-input #Desc type="text"></ion-input>
+		</ion-item>
 	</ion-list>
-	<button ion-button full (Click)="addProject()">Add</button>
+	<button ion-button full (click)="addProject()">Add</button>
 </ion-content>
