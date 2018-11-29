@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { NavController } from 'ionic-angular';
 import { NewProjectPage } from '../home/newproject';
 import { PeriodPage } from '../period/period';
@@ -10,7 +11,55 @@ import { CheckPage } from '../check/check';
 })
 export class HomePage {
   projects: any;
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public storage: Storage) {	
+	this.makeSampleData();
+	for(var projidx=0;projidx<this.projects.length;projidx++) {
+		var project = this.projects[projidx];
+		if (project["Type"] == "Period") {
+			var startDate = Date.parse(project["StartDate"]);
+			var endDate = Date.parse(project["EndDate"]);
+			var todayDate = Date.now();
+			var duration = Math.ceil((endDate - todayDate) / (1000 * 60 * 60 * 24));
+			project["Progress"] = Math.ceil((todayDate - startDate) * 100 / (endDate - startDate));
+			project["InfoText"] = String(duration) + " days left";
+		} else if (project["Type"] == "Check") {
+			var checkedCount = 0;
+			for(var itemidx=0;itemidx<project["Data"].length;itemidx++) {
+				if (project["Data"][itemidx]["Checked"]) {
+					checkedCount = checkedCount+1;
+				}
+			}
+			if (checkedCount < project["Data"].length) {
+			  project["Progress"] = Math.ceil(100 * checkedCount / project["Data"].length);
+			  project["InfoText"] = String(checkedCount) + " / " + project["Data"].length;
+			} else {
+			  project["Progress"] = 100;
+			  project["InfoText"] = "Complete";
+			}
+		} else if (project["Type"] == "Ticket") {
+			var totalProgress = 0;
+			var incompletedTickets = 0;
+			for (var dataidx=0;dataidx<project["Data"].length;dataidx++) {
+				totalProgress += project["Data"][dataidx]["Progress"];
+			if (project["Data"][dataidx]["Progress"] < 100) 
+				incompletedTickets = incompletedTickets + 1;
+			}
+			project["Progress"] = Math.ceil(100 * totalProgress / (project["Data"].length * 100));
+			project["InfoText"] = String(incompletedTickets) + " tickets left";
+		}
+	}
+  }
+  openProjectPage(item) {
+	if (item["Type"] == "Period")
+		this.navCtrl.push(PeriodPage, {project: item});
+	else if (item["Type"] == "Check")
+		this.navCtrl.push(CheckPage, {project: item});
+  }
+  addProject() {
+	  this.navCtrl.push(NewProjectPage);
+  }
+  
+  makeSampleData() {
     this.projects = [
 	  {
 		"Name":"TestPeriod", 
@@ -81,50 +130,5 @@ export class HomePage {
 		]
 	  },
 	];
-	
-	for(var projidx=0;projidx<this.projects.length;projidx++) {
-		var project = this.projects[projidx];
-		if (project["Type"] == "Period") {
-			var startDate = Date.parse(project["StartDate"]);
-			var endDate = Date.parse(project["EndDate"]);
-			var todayDate = Date.now();
-			var duration = Math.ceil((endDate - todayDate) / (1000 * 60 * 60 * 24));
-			project["Progress"] = Math.ceil((todayDate - startDate) * 100 / (endDate - startDate));
-			project["InfoText"] = String(duration) + " days left";
-		} else if (project["Type"] == "Check") {
-			var checkedCount = 0;
-			for(var itemidx=0;itemidx<project["Data"].length;itemidx++) {
-				if (project["Data"][itemidx]["Checked"]) {
-					checkedCount = checkedCount+1;
-				}
-			}
-			if (checkedCount < project["Data"].length) {
-			  project["Progress"] = Math.ceil(100 * checkedCount / project["Data"].length);
-			  project["InfoText"] = String(checkedCount) + " / " + project["Data"].length;
-			} else {
-			  project["Progress"] = 100;
-			  project["InfoText"] = "Complete";
-			}
-		} else if (project["Type"] == "Ticket") {
-			var totalProgress = 0;
-			var incompletedTickets = 0;
-			for (var dataidx=0;dataidx<project["Data"].length;dataidx++) {
-				totalProgress += project["Data"][dataidx]["Progress"];
-			if (project["Data"][dataidx]["Progress"] < 100) 
-				incompletedTickets = incompletedTickets + 1;
-			}
-			project["Progress"] = Math.ceil(100 * totalProgress / (project["Data"].length * 100));
-			project["InfoText"] = String(incompletedTickets) + " tickets left";
-		}
-	}
-  }
-  openProjectPage(item) {
-	if (item["Type"] == "Period")
-		this.navCtrl.push(PeriodPage, {project: item});
-	else if (item["Type"] == "Check")
-		this.navCtrl.push(CheckPage, {project: item});
-  }
-  addProject() {
-	  this.navCtrl.push(NewProjectPage);
   }
 }
