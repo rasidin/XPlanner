@@ -14,7 +14,6 @@ export class PeriodPage {
 	constructor(public navCtrl: NavController, public navParams: NavParams) {
 		this.project = this.navParams.data.project;
 		this.database = this.navParams.data.database;
-		this.items = this.project.Data;
 		
 		this.setupDate();
 	}
@@ -23,8 +22,9 @@ export class PeriodPage {
 		this.setupDate();
 	}	
 	setupDate() {
+		this.items = this.project.Data;
+
 		if (this.items == null) return;
-		console.log(this.items);
 		var todayDate = Date.now();
 		for(var itemidx=0;itemidx<this.items.length;itemidx++) {
 			var item = this.items[itemidx];
@@ -36,14 +36,19 @@ export class PeriodPage {
 			
 			// Info line 0
 			item.InfoTexts = [];
-			item.InfoTexts.push("" + leftDays + " days left");			
 			
-			if (leftDays < 0)
+			if (leftDays < 0) {
+				item.InfoTexts.push("Complete");
 				item.Progress = 100;
-			else if (item.StartDateObj > todayDate)
+			}
+			else if (item.StartDateObj > todayDate) {
+				item.InfoTexts.push("Not in progress");
 				item.Progress = 0;
-			else 
+			}
+			else {
+			item.InfoTexts.push("" + leftDays + " days left");			
 				item.Progress = Math.ceil(leftDays * 100 / duration);
+			}
 		}
 	}
 	addPeriod() {

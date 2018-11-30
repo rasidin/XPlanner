@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 interface DataTableInterface {
 	getProjectList():any;
 	getProjectItems(project):any;
+	getJSONString():any;
 }
 
 export class DateFilter {
@@ -18,6 +19,7 @@ export class TestDataTable implements DataTableInterface {
 	projects = [
 	{
 		"ID":1,
+		"SortOrder":1,
 		"Name":"TestPeriod", 
 		"Type":"Period", 
 		"Progress":0,
@@ -53,10 +55,10 @@ export class TestDataTable implements DataTableInterface {
 	}
 	addProject(name, type, desc) {
 		var newID = this.projects[this.projects.length-1].ID + 1;
-		var dateformat = new DatePipe();
 		var datetext = DateFilter.filter(new Date());
 		this.projects.push({
 			"ID":newID,
+			"SortOrder":this.project.length,
 			"Name":name,
 			"Type":type,
 			"Desc":desc,
@@ -71,6 +73,7 @@ export class TestDataTable implements DataTableInterface {
 		if (project.Type == "Period") {
 			this.perioditems.push({
 				"ParentID":project.ID,
+				"SortOrder":project.Data.length,
 				"Name":name,
 				"Category":category,
 				"StartDate":startdate,
@@ -79,6 +82,9 @@ export class TestDataTable implements DataTableInterface {
 		} else if (project.Type == "Check") {
 		} else if (project.Type == "Ticket") {
 		}
+	}
+	getJSONString() {
+		return JSON.stringify(this);
 	}
 }
 
@@ -98,11 +104,14 @@ export class DataBase {
 	}
 	addProject(name, type, desc) {
 		this.DataTable.addProject(name, type, desc);
-		console.log(this.getProjectList());
+		this.printJSON();
 	}
 	addItem(project, name, category, startdate, enddate) {
 		this.DataTable.addItem(project, name, category, startdate, enddate);
 		this.getProjectItems(project);
-		console.log(project);
+		this.printJSON();
+	}
+	printJSON() {
+		console.log(this.DataTable.getJSONString());
 	}
 }

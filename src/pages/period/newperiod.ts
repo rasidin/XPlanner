@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { AlertController, NavController, NavParams } from 'ionic-angular';
+import { DateFilter } from '../../service/database/database';
 
 @Component({
 	selector: 'page-newperiod',
@@ -14,16 +15,15 @@ export class NewPeriodPage {
 	database: any;
 	categories: any;
 	project: any;
-	constructor(public public navCtrl:NavController, public navParams:NavParams, public alertCtrl:AlertController)
+	constructor(public navCtrl:NavController, public navParams:NavParams, public alertCtrl:AlertController)
 	{
 		this.database = this.navParams.data.database;
 		this.project = this.navParams.data.project;
 		this.categories = this.navParams.data.categories;
 	}
 	ngOnInit() {
-		var todayDate = Date.now();
-		this.BeginVC.value = todayDate;
-		console.log(this.BeginVC.value);
+		this.BeginVC.value = DateFilter.filter(new Date());
+		this.EndVC.value = DateFilter.filter(new Date());
 	}
 	onCategoryChange(event) {
 		if (event == "Add category") {
@@ -53,7 +53,7 @@ export class NewPeriodPage {
 		}
 	}
 	addPeriod() {
-		this.database.addItem(this.project, this.NameVC.value, this.CategoryVC.value[0], this.BeginVC.value, this.EndVC.value);
+		this.database.addItem(this.project, this.NameVC.value, this.CategoryVC.value, this.BeginVC.value, this.EndVC.value);
 		this.navCtrl.pop();
 	}
 }
