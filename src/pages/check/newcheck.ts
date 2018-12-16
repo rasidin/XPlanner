@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, NavParams } from 'ionic-angular';
+import { AlertController, NavParams, NavController } from 'ionic-angular';
 
 @Component({
 	selector: 'page-newcheck',
@@ -7,11 +7,28 @@ import { AlertController, NavParams } from 'ionic-angular';
 })
 export class NewCheckPage
 {
+	@ViewChild('Name') nameVC;
 	@ViewChild('CategorySelect') categorySelect;
+	@ViewChild('Desc') descVC;
 	
+	database: any;
+	project: any;
 	categories: any;
-	constructor(public navParams:NavParams, public alertCtrl:AlertController) {
-		this.categories = navParams.data.Categories;
+	item:any;
+	loader:any;
+	constructor(public navParams:NavParams, public navCtrl:NavController, public alertCtrl:AlertController) {
+		this.database = navParams.data.database;
+		this.project = navParams.data.project;
+		this.categories = navParams.data.categories;
+		this.item = navParams.data.checkItem;
+		this.loader = navParams.data.loader;
+	}
+	ngOnInit() {
+		if (this.item) {
+			this.nameVC.value = this.item.Name;
+			this.categorySelect.value = this.item.Category;
+			this.descVC.value = this.item.Desc;
+		}
 	}
 	onCategoryChange(event) {
 		if (event == "Add category") {
@@ -39,5 +56,14 @@ export class NewCheckPage
 			});
 			prompt.present();
 		}
+	}
+	addCheck() {
+		this.loader.present();
+		if (this.item) {
+			this.database.setItem(this.project, this.item.ID, this.nameVC.value, this.categorySelect.value, this.descVC.value);
+		} else {
+			this.database.addItem(this.project, this.nameVC.value, this.categorySelect.value, this.descVC.value);
+		}
+		this.navCtrl.pop();
 	}
 }

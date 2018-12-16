@@ -18,10 +18,22 @@
 			</ion-card-header>
 			<ion-card-content>
 				<ion-list>
-					<ion-item *ngFor="let item of category.Data">
-						<ion-label>{{item.Title}}</ion-label>
-						<ion-checkbox>{{item.Checked}}</ion-checkbox>
-					</ion-item>
+					<ion-item-sliding *ngFor="let item of category.Data">
+						<ion-item>
+							<ion-label>{{item.Name}}</ion-label>
+							<ion-checkbox (ionChange)="updateChecked($event, item)" checked={{item.Checked}}></ion-checkbox>
+						</ion-item>
+						<ion-item-options side="right">
+							<button ion-button (click)="modifyItem(item)">
+								<ion-icon name="brush"></ion-icon>
+								Edit
+							</button>
+							<button ion-button color="danger" (click)="removeItem(item)">
+								<ion-icon name="trash"></ion-icon>
+								Remove
+							</button>
+						</ion-item-options>
+					</ion-item-sliding>
 				</ion-list>
 			</ion-card-content>
 		</ion-card>

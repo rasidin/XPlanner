@@ -9,7 +9,7 @@
 	<ion-list>
 		<ion-item>
 			<ion-label>Name</ion-label>
-			<ion-input type="text" value="New Period" #Name></ion-input>
+			<ion-input type="text" #Name></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label>Category</ion-label>
@@ -27,5 +27,5 @@
 			<ion-input type="date" #End></ion-input>
 		</ion-item>
 	</ion-list>
-	<button ion-button (click)="addPeriod()" full>Add</button>
+	<button ion-button (click)="addPeriod()" full>{{OKButtonName}}</button>
 </ion-content>

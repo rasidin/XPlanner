@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Add project
+      {{Title}}
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -9,7 +9,7 @@
 	<ion-list>
 		<ion-item>
 			<ion-label>Name</ion-label>
-			<ion-input #Name type="text" value="New Project"></ion-input>
+			<ion-input #Name type="text"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label>Type</ion-label>
@@ -24,5 +24,5 @@
 			<ion-input #Desc type="text"></ion-input>
 		</ion-item>
 	</ion-list>
-	<button ion-button full (click)="addProject()">Add</button>
+	<button ion-button full (click)="addProject()">{{OKButtonName}}</button>
 </ion-content>

@@ -9,7 +9,7 @@
 	<ion-list>
 		<ion-item>
 			<ion-label>Title</ion-label>
-			<ion-input type="text"></ion-input>
+			<ion-input type="text" #Name></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label>Category</ion-label>
@@ -20,8 +20,8 @@
 		</ion-item>
 		<ion-item>
 			<ion-label>Description</ion-label>
-			<ion-input type="text"></ion-input>
+			<ion-input type="text" #Desc></ion-input>
 		</ion-item>
 	</ion-list>
-	<button ion-button full (Click)="addCheck()">Add</button>
+	<button ion-button full (click)="addCheck()">Add</button>
 </ion-content>

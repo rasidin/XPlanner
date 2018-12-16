@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
+import { SQLite } from '@ionic-native/sqlite';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -43,6 +44,7 @@ import { ProgressBarComponent } from '../components/progressbar/progressbar'
   providers: [
     StatusBar,
     SplashScreen,
+	SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
